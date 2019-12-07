@@ -1,0 +1,37 @@
+{{ define "reportPage.html" }}
+{{ template "head.html" . }}
+{{ template "menu3.html" . }}
+{{ template "time.html" . }}
+<div class="ui section divider"></div>
+<form class="ui form" method="post" action="/genReport" target="_blank">
+  <div class="field">
+    <label>เลือกวันที่สร้างรายงาน</label>
+    <div class="two fields">
+      <div class="field">
+        <label>จากวันที่</label>
+        <input style="background-color: #dda185;" type="text" id="datepicker" name="datepicker" value="{{.today}}">
+      </div>
+      <div class="field">
+        <label>ถึงวันที่</label>
+        <input style="background-color: #dda185;" type="text" id="datepicker2" name="datepicker2" value="">
+      </div>
+    </div>
+  </div>
+    <div class="field">
+    	<select style="background-color: #dda185; height: 50px;" class="ui dropdown" name="groupid" id="groupid" required>
+    		<option value="">กรุณาเลือกกลุ่ม</option>
+    		{{ range .groups }}
+  			<option value="{{.Groupid}}">{{.Groupname}}</option>
+  			{{ end }}
+		</select>
+    </div>
+    <div class="field">
+      <button class="ui primary button"> สร้างรายงาน </button>
+      <div class="ui toggle checkbox">
+            <input type="checkbox" name="special">
+              <label>Special</label>
+      </div>
+    </div>
+</form>
+{{ template "foot.html" . }}
+{{ end }}

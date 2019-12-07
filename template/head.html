@@ -1,0 +1,55 @@
+{{ define "head.html" }}
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+@font-face {
+  font-family: mfont;
+  src: url('/s/fonts/mfontx.ttf');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: mfont;
+  src: url('/s/fonts/mfontxb.ttf');
+  font-style: normal;
+  font-weight: bold;
+}
+
+* {
+  font-family: mfont;
+  font-weight: normal;
+  text-decoration:none;
+  font-size: 14pt;
+  margin: 0;
+  color: black;
+}
+
+</style>
+<script src="/s/jquery/jq.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/s/semantic/semantic.min.css">
+<script src="/s/semantic/semantic.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/s/semantic/components/tab.min.css">
+<script src="/s/semantic/components/tab.min.js"></script>
+
+<title>
+ระบบบันทึกการเข้างาน
+</title>
+</head>
+<body>
+
+<div class="ui grid container" style="min-height: 100%; min-width: 100%;">
+  <div style="background-color:#331919;" class="three wide column">
+    <a style="padding:30px;" href="http://www.rmutsv.ac.th" target="_blank" class="ui medium centered image"><img src="/s/img/rmutsv.png"></a>
+  </div>
+  <div style="padding:0px; background-color:#EDDAB6;" class="thirteen wide column">
+    <div style="background-color:#AB3334;" class="row">
+      <h1 style="padding:30px; color: white;">ระบบบันทึกเวลาเข้างาน</h1>
+    </div>
+    <div class="row">
+      <div style="padding: 30px 30px 0px 30px;">
+{{ end }}

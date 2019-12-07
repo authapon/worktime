@@ -1,0 +1,22 @@
+{{ define "checkin.html" }}
+{{ template "head.html" . }}
+{{ template "menu0.html" . }}
+{{ template "time.html" . }}
+      <div class="ui grid">
+        <div class="seven wide column" style="min-width: 420px;">
+          <img id="picc" style="width: 400px; height: 300px;">
+        </div>
+        <div class="nine wide column">
+<h3>{{ .fullname }} ({{ .username }})</h3><h3>เข้างานเวลา {{ .hour }} : {{ .minute }}</h3>
+<h3>จากเครื่อง IP : {{ .ip }}</h3>
+<h3>สาย {{ .late }} นาที</h3>
+        </div>
+      </div>
+
+<script>
+var picc  = document.getElementById('picc');
+picc.src = "{{ .pic }}";
+</script>
+
+{{ template "foot.html" . }}
+{{ end }}

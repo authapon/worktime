@@ -1,0 +1,15 @@
+{{ define "time.html" }}
+      <script>
+        setInterval(function(){
+        	var timelabel = document.getElementById('timelabel');
+        	$.ajax("/service/getTime")
+        		.done(function(data) {
+  						timelabel.innerHTML = data;
+  				  })
+  					.fail(function(){
+  				  	timelabel.innerHTML = "Cannot connect to server";
+  				  });
+				}, 200);
+      </script>
+      <h3 id="timelabel"></h3>
+{{ end }}

@@ -1,0 +1,77 @@
+{{ define "personReport.html" }}
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+@font-face {
+  font-family: mfont;
+  src: url('/s/fonts/mfontx.ttf');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: mfont;
+  src: url('/s/fonts/mfontxb.ttf');
+  font-style: normal;
+  font-weight: bold;
+}
+
+* {
+  font-family: mfont;
+  font-weight: normal;
+  text-decoration:none;
+  font-size: 10pt;
+  margin: 0;
+  color: black;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+</style>
+<script src="/s/jquery/jq.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/s/semantic/semantic.min.css">
+<script src="/s/semantic/semantic.min.js"></script>
+
+<title>
+ระบบรายงานการเข้างาน 
+</title>
+</head>
+<body>
+<div class="ui center aligned container">
+<span style="font-weight: bold;">ระบบรายงานการเข้างาน {{.monthtxt}}<br>
+{{.fname}} {{.lname}} ({{.epassport}})<br>
+{{.gname}}</span>
+
+  <table class="ui very compact striped celled table">
+  <thead>
+    <tr class="center aligned">
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">รูป</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">วันที่</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">เวลาเข้างาน</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">เวลาสาย</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">IP</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">ลายเซ็นต์</th>
+  </tr></thead>
+  <tbody>
+  {{ range .data }}
+  <tr class="center aligned">
+    <td style="width: 130px;">{{ if .Pic }}<img style="width: 50px; height: 37px;" src="data:{{.Pic}}">{{ else }}<img style="width: 50px; height: 37px;" src="/s/img/q.jpg">{{ end }}</td>
+    <td>{{ .Day }}</td>
+    <td>{{ .Worktime }}</td>
+    <td>{{ .Late }}</td>
+    <td>{{ .Ip }}</td>
+    <td style="width:100px;"> </td>
+  </tr>
+  {{ end }}
+  </tbody>
+  </table>
+
+</div>
+</body>
+</html>
+{{ end }}

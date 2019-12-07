@@ -1,0 +1,188 @@
+{{ define "index.html" }}
+{{ template "head.html" . }}
+{{ template "menu1.html" . }}
+{{ template "time.html" . }}
+      <div class="ui grid">
+        <div class="seven wide column" style="min-width: 420px;">
+          <video autoplay id="v1" style="width: 400px; height: 300px;"></video>
+        </div>
+        <div class="nine wide column">
+          <div id="f1" style="visibility: hidden;">
+            <div class="ui form">
+              <div class="field">
+                <label>e-Passport User </label>
+                <input style="background-color: #dda185;" type="text" id="username" name="username" placeholder="e-Passport User">
+              </div>
+              <div class="field">
+                <label>Password</label>
+                <input style="background-color: #dda185;" type="password" id="password" name="password" placeholder="Password">
+              </div>        
+              <div class="field">
+                <button class="ui primary button" onclick="checkin();"> ลงเวลาเข้างาน </button>
+              </div>
+            </div>
+          </div>  
+          <div id="f2" style="visibility: hidden;">
+            <h2>กำลังตรวจสอบ e-Passport กรุณารอซักครู่ ...</h2>
+          </div>
+          <div id="f3" style="visibility: hidden;">
+            <span id="counttxt" style="font-size: 600%; font-weight: bold; color: red;">0</span>
+          </div>
+          <div id="f4" style="visibility: hidden;">
+            <h2 id="workinTxt"></h2>
+          </div>
+        </div>
+      </div>
+      <form method="post" action="/checkin" id="checkForm" name="checkForm">
+        <input type="hidden" id="usernameF" name="username">
+        <input type="hidden" id="fullname" name="fullname">
+        <input type="hidden" id="pic" name="pic">
+      </form> 
+<script>
+
+var video  = document.getElementById('v1');
+var canv = document.createElement("canvas");
+var ctx  = canv.getContext('2d');
+var state = 0;
+
+if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    .then(function(stream){
+      video.srcObject = stream;
+    })
+    .catch(function(err) {
+      alert(err);
+    });
+} else {
+  alert("getUserMedia not supported !!!");
+};
+
+document.getElementById('password').onkeypress = function(e){
+  if (e.keyCode == 13) {
+    checkin();
+  }
+};
+
+document.getElementById('username').onkeypress = function(e){
+  if (e.keyCode == 13) {
+    checkin();
+  }
+};
+
+function checkin() {
+  var username = document.getElementById('username');
+  var password = document.getElementById('password');
+  var f1 = document.getElementById('f1');
+  var f2 = document.getElementById('f2');
+  var f3 = document.getElementById('f3');
+  var f4 = document.getElementById('f4');
+  var chkForm = document.getElementById('chkForm');
+  var usernameF = document.getElementById('usernameF');
+  var fullname = document.getElementById('fullname');
+  var pic = document.getElementById('pic');
+  var counttxt = document.getElementById('counttxt');
+  var count = 0;
+
+  f1.style.visibility = "hidden";
+  f2.style.visibility = "visible";
+  f3.style.visibility = "hidden";
+
+  $.ajax({
+    method: "POST",
+    url: "/service/epassport",
+    data: {username: username.value, password: password.value},
+  })
+    .done(function(data) {
+      if (data == "none") {
+        alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+      } else if (data == "error") {
+        alert("เกิดข้อผิดพลาดใน server");
+      } else {
+        //alert("เตรียมตัวถ่ายรูปครับ !!!");
+        f1.style.visibility = "hidden";
+        f2.style.visibility = "hidden";
+        f3.style.visibility = "visible";
+        count = 2;
+        counttxt.innerHTML = count + 1;
+        var counting = setInterval(function(){
+          if (count == 0) {
+            clearInterval(counting);
+            f3.style.visibility = "hidden";
+            f2.style.visibility = "hidden";
+            f1.style.visibility = "hidden";
+
+            ctx.drawImage(video,0,0,canv.width,canv.height);
+            pic.value = canv.toDataURL('image/jpg');
+
+            usernameF.value = username.value;
+            fullname.value = data;
+            checkForm.submit();
+            username.value = "";
+            password.value = "";
+            return;
+          }
+          counttxt.innerHTML = count;
+          count = count - 1;
+        }, 1000);
+        return;
+      }
+      f3.style.visibility = "hidden";
+      f2.style.visibility = "hidden";
+      f1.style.visibility = "visible";
+    })
+    .fail(function() {
+      alert("ติดต่อ server ไม่ได้");
+      f3.style.visibility = "hidden";
+      f2.style.visibility = "hidden";
+      f1.style.visibility = "visible";
+    });
+};
+
+setInterval(function(){
+  var username = document.getElementById('username');
+  var password = document.getElementById('password');
+  var f1 = document.getElementById('f1');
+  var f2 = document.getElementById('f2');
+  var f3 = document.getElementById('f3');
+  var f4 = document.getElementById('f4');
+  var workinTxt = document.getElementById('workinTxt');
+
+  $.ajax("/service/canChkIn")
+    .done(function(data) {
+      if  (data != 'ok') {
+        if (state != 2) {
+          state = 2;
+          username.value = "";
+          password.value = "";
+          f1.style.visibility = "hidden";
+          f2.style.visibility = "hidden";
+          f3.style.visibility = "hidden";
+          f4.style.visibility = "visible";
+          workinTxt.innerHTML = data;
+        } 
+      } else {
+        if (state != 1) {
+          state = 1;
+          username.value = "";
+          password.value = "";
+          f1.style.visibility = "visible";
+          f2.style.visibility = "hidden";
+          f3.style.visibility = "hidden";
+          f4.style.visibility = "hidden";
+          workinTxt.innerHTML = "";
+        }
+      }
+    })
+    .fail(function() {
+      state = 0;
+      f1.style.visibility = "hidden";
+      f2.style.visibility = "hidden";
+      f3.style.visibility = "hidden";
+      f4.style.visibility = "visible";
+      workinTxt.innerHTML = "ติดต่อ server ไม่ได้";
+    });
+}, 200);
+
+</script>
+{{ template "foot.html" . }}
+{{ end }}

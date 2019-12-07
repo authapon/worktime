@@ -1,0 +1,59 @@
+{{ define "todayPage.html" }}
+{{ template "head.html" . }}
+{{ template "menu2.html" . }}
+{{ template "time.html" . }}
+{{$dtab := .dTab}}
+{{$month := .month}}
+{{$year := .year}}
+<div class="ui section divider"></div>
+<div id="groupstab">
+<div class="ui top attached tabular menu">
+  {{ range .groups }}
+    {{ if eq .Groupid $dtab }}
+    <a class="item active" data-tab="tab{{ .Groupid }}">{{ .Groupname }}</a>
+    {{ else }}
+    <a class="item" data-tab="tab{{ .Groupid }}">{{ .Groupname }}</a>
+    {{ end }}
+  {{ end }}
+</div>
+{{ $d := .dataChkIn }}
+{{ range .groups }}
+  {{ $g := .Groupid }}
+    {{ if eq .Groupid $dtab }}
+<div class="ui bottom attached active tab segment" data-tab="tab{{ .Groupid }}">
+    {{ else }}
+<div class="ui bottom attached tab segment" data-tab="tab{{ .Groupid }}">
+    {{ end }}
+  <table class="ui very compact striped basic table">
+  <thead>
+    <tr class="center aligned"><th>รูป</th>
+    <th>ชื่อ</th>
+    <th>สกุล</th>
+    <th>เวลาเข้างาน</th>
+    <th>เวลาสาย</th>
+    <th>IP</th>
+  </tr></thead>
+  <tbody>
+  {{ range $d }}
+    {{ if eq .Groupid $g }}
+  <tr class="center aligned">
+    <td style="width: 130px;"><a href="/personReport/{{.Epassport}}/{{$month}}/{{$year}}" target="_blank">{{ if .Pic }}<img style="width: 120px; height: 90px;" src="data:{{.Pic}}">{{ else }}<img style="width: 120px; height: 90px;" src="/s/img/q.jpg">{{ end }}</a></td>
+    <td>{{ .Fname }}</td>
+    <td>{{ .Lname }}</td>
+    <td>{{ .Worktime }}</td>
+    <td>{{ .Late }}</td>
+    <td>{{ .Ip }}</td>
+  </tr>
+    {{ end }}
+  {{ end }}
+  </tbody>
+  </table>
+</div>
+{{ end }}
+</div>
+
+<script>
+$('#groupstab .menu .item').tab();
+</script>
+{{ template "foot.html" . }}
+{{ end }}

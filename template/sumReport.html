@@ -1,0 +1,78 @@
+{{ define "sumReport.html" }}
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+@font-face {
+  font-family: mfont;
+  src: url('/s/fonts/mfontx.ttf');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: mfont;
+  src: url('/s/fonts/mfontxb.ttf');
+  font-style: normal;
+  font-weight: bold;
+}
+
+* {
+  font-family: mfont;
+  font-weight: normal;
+  text-decoration:none;
+  font-size: 10pt;
+  margin: 0;
+  color: black;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+</style>
+<script src="/s/jquery/jq.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/s/semantic/semantic.min.css">
+<script src="/s/semantic/semantic.min.js"></script>
+<script src="/s/tablesort.js"></script>
+
+<title>
+ระบบรายงานการเข้างาน 
+</title>
+</head>
+<body>
+<div class="ui center aligned container">
+<span style="font-weight: bold;">ระบบรายงานการเข้างาน {{.monthtxt}}<br>
+{{.gname}}</span>
+{{$path := .path}}
+{{$rpath := .rpath}}
+  <table class="ui sortable very compact striped celled table">
+  <thead>
+    <tr class="center aligned">
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">e-Passport</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">ชื่อ</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">สกุล</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">เวลาสาย</th>
+    <th style="border-color: black; border-style: solid; border-width: 1px 1px 1px 0px;">ขาดงาน</th>
+  </tr></thead>
+  <tbody>
+  {{ range .data }}
+  <tr class="center aligned">
+    <td><a href="/{{$rpath}}/{{.Epassport}}/{{$path}}" target="_blank">{{ .Epassport }}</a></td>
+    <td>{{ .Fname }}</td>
+    <td>{{ .Lname }}</td>
+    <td>{{ .Late }}</td>
+    <td>{{ .Absent }}</td>
+  </tr>
+  {{ end }}
+  </tbody>
+  </table>
+<script>
+$('table').tablesort();
+</script>
+</div>
+</body>
+</html>
+{{ end }}
