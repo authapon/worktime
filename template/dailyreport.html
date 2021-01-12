@@ -64,8 +64,8 @@ table, th, td {
     {{ $year := .year }}
   {{ range .data }}
     {{ if eq .Groupid $g }}
-  <tr class="center aligned">
-    <td style="width: 130px;"><a href="/personReport/{{.Epassport}}/{{$month}}/{{$year}}" target="_blank">{{ if .Pic }}<img style="width: 50px; height: 37px;" src="data:{{.Pic}}">{{ else }}<img style="width: 50px; height: 37px;" src="/s/img/q.jpg">{{ end }}</a></td>
+  <tr class="center aligned" style="padding: 0px 0px 0px;">
+    <td style="width: 130px;padding: 0px 0px 0px;"><a href="/personReport/{{.Epassport}}/{{$month}}/{{$year}}" target="_blank">{{ if .Pic }}<img style="width: 40px; height: 30px;" src="data:{{.Pic}}">{{ else }}<img style="width: 40px; height: 30px;" src="/s/img/q.jpg">{{ end }}</a></td>
     <td>{{ .Fname }}</td>
     <td>{{ .Lname }}</td>
     <td>{{ .Worktime }}</td>

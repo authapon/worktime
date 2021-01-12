@@ -59,8 +59,8 @@ table, th, td {
   </tr></thead>
   <tbody>
   {{ range .data }}
-  <tr class="center aligned">
-    <td style="width: 130px;">{{ if .Pic }}<img style="width: 50px; height: 37px;" src="data:{{.Pic}}">{{ else }}<img style="width: 50px; height: 37px;" src="/s/img/q.jpg">{{ end }}</td>
+  <tr class="center aligned" style="padding: 0px 0px 0px;">
+    <td style="width: 130px;padding: 0px 0px 0px;">{{ if .Pic }}<img style="width: 40px; height: 30px;" src="data:{{.Pic}}">{{ else }}<img style="width: 40px; height: 30px;" src="/s/img/q.jpg">{{ end }}</td>
     <td>{{ .Day }}</td>
     <td>{{ .Worktime }}</td>
     <td>{{ .Late }}</td>
