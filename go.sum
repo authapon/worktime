@@ -1,0 +1,6 @@
+github.com/authapon/mwebserv v1.0.0 h1:coTZHgrMJR7pwbRJVPPtXTX5labOk3gOEVMzR4O3/gY=
+github.com/authapon/mwebserv v1.0.0/go.mod h1:qPCMu923bbAmF+sbOOvUwz1OiPaSN5+rhLI+Qt0PdTg=
+github.com/go-sql-driver/mysql v1.5.0 h1:ozyZYNQW3x3HtqT1jira07DN2PArx2v7/mN66gGcHOs=
+github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
+gopkg.in/BurntSushi/toml.v0 v0.3.1 h1:K/Xgr72ODDk7PfAE8242yk62/3O3m9drxmq4WWUo1P0=
+gopkg.in/BurntSushi/toml.v0 v0.3.1/go.mod h1:uoRvZkb4TXLRVNwG6ftYSCz3tFiczxRProi9nbuYtMc=
