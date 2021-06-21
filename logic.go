@@ -616,6 +616,9 @@ func checkinPage(c *mw.MContext) {
 	fullname := c.R.Form.Get("fullname")
 	pic := c.R.Form.Get("pic")
 	fmt.Printf("%s - %s\n", username, fullname)
+	if username == "" {
+		c.Redirect("/")
+	}
 
 	t := time.Now()
 	day := strconv.FormatInt(int64(t.Day()), 10)
